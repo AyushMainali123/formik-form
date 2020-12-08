@@ -6,8 +6,26 @@
 }
 
 .form {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  margin: 100px auto;
+}
+
+.form__form_control {
+  margin: 20px 0;
+}
+
+.textError {
+  color: rgb(192, 35, 35);
+}
+
+.form__label {
+  margin-bottom: 5px;
+  font-weight: 400;
+}
+
+input,
+textarea {
+  width: 80vw;
+  max-width: 720px;
+  padding: 5px;
+  outline: none;
 }
