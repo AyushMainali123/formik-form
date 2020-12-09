@@ -1,7 +1,7 @@
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Form, Field, ErrorMessage, FieldArray } from "formik";
 import { Button, TextField } from "@material-ui/core";
-import { object, string } from "yup";
+import { object, string, number } from "yup";
 import TextError from "./TextError";
 const initialValues = {
   username: "",
@@ -13,6 +13,8 @@ const initialValues = {
     facebook: "",
     twitter: "",
   },
+  phoneNumbers: ["", ""],
+  phNumbers: [],
 };
 
 const handleSubmit = (values) => {
@@ -40,7 +42,7 @@ const FormikForm = () => {
             .required("Please enter your comment")
             .max(250, "Comment shouldnot exceed 250 letters")
             .min(3, "Comment should be atleast 3 letters long!"),
-          address: string().required(),
+          address: string().required()
         })}
       >
         <Form autoComplete="off">
@@ -105,6 +107,74 @@ const FormikForm = () => {
               <Field name="social.twitter" id="twitter" />
               <ErrorMessage name="social.twitter" component={TextError} />
             </div>
+          </div>
+
+          {/* Phone Numbers */}
+          <div className="form__form_control">
+            {/* Primary */}
+            <div>
+              <div className="form__label">
+                <label htmlFor="primary">primary</label>
+              </div>
+              <Field name="phoneNumbers[0]" id="primary" type="number" />
+              <ErrorMessage name="phoneNumbers[0]" component={TextError} />
+            </div>
+
+            {/* Secondary */}
+            <div>
+              <div className="form__label">
+                <label htmlFor="secondary">Secondary</label>
+              </div>
+              <Field name="phoneNumbers[1]" id="secondary" type="number" />
+              <ErrorMessage name="phoneNumbers[1]" component={TextError} />
+            </div>
+          </div>
+
+          {/* List of phone numbers */}
+          <div className="form__form_control">
+            <div className="form__label">
+              <label>List Of Phone Numbers</label>
+            </div>
+            <FieldArray name={"phNumbers"}>
+              {(renderHelpers) => {
+                const {
+                  form: {
+                    values: { phNumbers },
+                  },
+                } = renderHelpers;
+
+
+                return phNumbers.length ? (
+                  phNumbers.map((number, index) => (
+                    <div key={index} style={{ marginBottom: 10 }}>
+                      <Field name={`phNumbers[${index}]`} />
+                      <button
+                        type="button"
+                        onClick={() => renderHelpers.push("")}
+                      >
+                        +
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => renderHelpers.remove(index)}
+                      >
+                        {" "}
+                        -{" "}
+                      </button>
+                    </div>
+                  ))
+                ) : (
+                  <Button
+                    onClick={() => renderHelpers.push("")}
+                    type="button"
+                    variant="outlined"
+                    color="secondary"
+                  >
+                    Add New Number
+                  </Button>
+                ); 
+              }}
+            </FieldArray>
           </div>
 
           {/* Submit Button */}
