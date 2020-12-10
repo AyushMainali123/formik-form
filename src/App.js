@@ -1,13 +1,14 @@
 import './App.css';
 import Footer from './Footer';
-import Form from './Form';
+import DemoForm from './Form';
 import Header from './Header';
-
+import FormikContainer from './components/FormikContainer'
 function App() {
   return (
     <div className="app">
       <Header />
-      <Form />
+      {/* <DemoForm /> */}
+      <FormikContainer />
       <Footer />
     </div>
   );
